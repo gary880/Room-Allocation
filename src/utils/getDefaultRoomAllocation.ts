@@ -3,6 +3,7 @@ import { Guest, Room, Allocation } from "@/types/allocation";
 export function getDefaultRoomAllocation(guest: Guest, rooms: Room[]): Allocation[] {
     const { adult, child } = guest;
 
+    // find the fill room priorty index
     const priorityRoomIndex  = rooms
         .map((room, index) => ({ index, adultPrice: room.adultPrice }))
         .sort((a, b) => a.adultPrice - b.adultPrice)
@@ -19,7 +20,7 @@ export function getDefaultRoomAllocation(guest: Guest, rooms: Room[]): Allocatio
     let remainingAdults = adult;
     let remainingChildren = child;
 
-    // Ensure at least one adult per room in the order of priorityFill
+    // one adult per room in the order of priorityFill
     priorityRoomIndex.forEach(index => {
         if (remainingAdults > 0) {
             allocations[index].adult = 1;

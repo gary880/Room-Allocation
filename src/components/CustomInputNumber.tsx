@@ -1,5 +1,6 @@
-import { useState, ChangeEvent, FocusEvent,memo } from 'react';
+import { useState, ChangeEvent, FocusEvent, memo } from 'react';
 import CustomInputButton from './CustomInputButton';
+
 interface CustomInputNumberProps {
     min: number;
     max: number;
@@ -23,12 +24,12 @@ const CustomInputNumber: React.FC<CustomInputNumberProps> = ({ min, max, step, n
     };
 
     const handleBlur = (event: FocusEvent<HTMLInputElement>) => {
-        onBlur(event)
-    }
+        onBlur(event);
+    };
 
     const handleIncrement = () => {
         if (inputValue < max) {
-            const newValue = Math.min(inputValue + step, max)
+            const newValue = Math.min(inputValue + step, max);
             setInputValue(newValue);
             onChange({ target: { name, value: newValue.toString() } } as ChangeEvent<HTMLInputElement>);
         }
@@ -36,21 +37,22 @@ const CustomInputNumber: React.FC<CustomInputNumberProps> = ({ min, max, step, n
 
     const handleDecrement = () => {
         if (inputValue > min) {
-            const newValue = Math.max(inputValue - step, min)
+            const newValue = Math.max(inputValue - step, min);
             setInputValue(newValue);
             onChange({ target: { name, value: newValue.toString() } } as ChangeEvent<HTMLInputElement>);
         }
     };
 
-    const isMin = inputValue <= min
-    const isMax = inputValue >= max
+    const isMin = inputValue <= min;
+    const isMax = inputValue >= max;
 
     return (
-        <div className=" flex p-2 justify-center gap-2 ">
+        <div className="flex p-2 justify-center gap-2">
             <CustomInputButton
                 onClick={handleDecrement}
                 sign='-'
                 disabled={disabled || isMin}
+                aria-label={`Decrement ${name}`}
             />
             <input
                 type='number'
@@ -63,11 +65,13 @@ const CustomInputNumber: React.FC<CustomInputNumberProps> = ({ min, max, step, n
                 max={max}
                 step={step}
                 className='remove-arrow p-2 border box-border w-12 h-12 text-base rounded-lg text-center disabled:text-stone-300'
+                aria-label={name}
             />
             <CustomInputButton
                 onClick={handleIncrement}
                 sign='+'
                 disabled={disabled || isMax}
+                aria-label={`Increment ${name}`}
             />
         </div>
     );

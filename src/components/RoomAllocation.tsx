@@ -13,7 +13,7 @@ interface RoomAllocationProps {
 }
 
 const RoomAllocation: React.FC<RoomAllocationProps> = ({ guest, rooms, onChange }) => {
-    const [allocations, setAllocations] = useState<Allocation[]>(getDefaultRoomAllocation(guest, rooms));
+    const [allocations, setAllocations] = useState<Allocation[]>(()=>getDefaultRoomAllocation(guest, rooms));
     const [allocateGuest, setAllocateGuest] = useState<Guest>({ adult: 0, child: 0 });
 
     const handleAllocationChange = useCallback((index: number, type: 'adult' | 'child', value: number) => {
@@ -40,7 +40,7 @@ const RoomAllocation: React.FC<RoomAllocationProps> = ({ guest, rooms, onChange 
    
     useEffect(() => {
         onChange(allocations.map(({ adult, child }) => ({ adult, child })))
-    }, [allocations]);
+    }, [allocations,onChange]);
 
     return (
         <div className="w-96 flex flex-col gap-4 mt-2">
@@ -52,7 +52,7 @@ const RoomAllocation: React.FC<RoomAllocationProps> = ({ guest, rooms, onChange 
                     <span>房間 {allocation.adult + allocation.child} 人</span>
                     <div className='flex justify-between items-center'>
                         <div className='flex flex-col'>
-                            <label htmlFor={`room-${index}-adult`}>大人</label>
+                            <span >大人</span>
                             <span className='text-gray-400'>年齡20+</span>
                         </div>
                         <CustomInputNumber
@@ -66,7 +66,7 @@ const RoomAllocation: React.FC<RoomAllocationProps> = ({ guest, rooms, onChange 
                         />
                     </div>
                     <div className='flex justify-between items-center'>
-                        <label htmlFor={`room-${index}-child`}>小孩</label>
+                        <span >小孩</span>
                         <CustomInputNumber
                             min={0}
                             max={Math.min(allocations[index].capacity - allocation.adult, allocateGuest.child + allocation.child)}
