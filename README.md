@@ -9,7 +9,7 @@ To get started with this project, follow these steps:
 
    ```bash
    git clone https://github.com/gary880/Room-Allocation.git
-   cd room-allocation-pretest
+   cd Room-Allocation
     ```
 
 2. **Install dependencies:**
@@ -39,7 +39,7 @@ To get started with this project, follow these steps:
 ## Project Structure
 
 ```plaintext
-room-allocation-pretest/
+Room-Allocation/
 ├── public/            # Public assets
 ├── src/               # Source files
 │   ├── __test__/      # Tests
